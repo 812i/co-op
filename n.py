@@ -5,7 +5,7 @@ import streamlit as st
 # =========================================================
 
 st.set_page_config(
-    page_title="Nora | AI Co-op Portfolio",
+    page_title="Norah | AI Co-op Portfolio",
     page_icon="🤖",
     layout="wide",
     initial_sidebar_state="collapsed"
@@ -16,7 +16,7 @@ st.set_page_config(
 # =========================================================
 
 CYBER_DEMO = "https://cyberpynora-f2yqphkxw9ijsmyrgyzybp.streamlit.app/"
-CYBER_GITHUB = "https://github.com/812i/cyber.py"
+# CYBER_GITHUB removed per request
 
 AWS_DEMO = "https://2jmaw5pf6jf43vqyyuc5rw.streamlit.app/"
 
@@ -90,18 +90,7 @@ footer {
     padding: 80px 0 80px 0;
 }
 
-.hero-label {
-    display: inline-block;
-    padding: 9px 15px;
-    border-radius: 30px;
-    background: rgba(150, 110, 255, 0.09);
-    border: 1px solid rgba(150, 110, 255, 0.3);
-    color: #bda5ff;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: .8px;
-    margin-bottom: 28px;
-}
+/* hero-label removed per request */
 
 .hero-title {
     font-size: clamp(50px, 8vw, 88px);
@@ -414,7 +403,7 @@ div[data-testid="stLinkButton"] a:hover {
 
 st.html("""
 <div class="nav">
-    <div class="logo">NORA.</div>
+    <div class="logo">NORAH.</div>
     <div class="status">OPEN TO CO-OP</div>
 </div>
 """)
@@ -427,12 +416,8 @@ st.html("""
 st.html("""
 <div class="hero">
 
-    <div class="hero-label">
-        🤖 ARTIFICIAL INTELLIGENCE STUDENT
-    </div>
-
     <div class="hero-title">
-        Hi, I'm <span>Nora.</span>
+        Hi, I'm <span>Norah.</span>
     </div>
 
     <div class="hero-text">
@@ -450,17 +435,10 @@ st.html("""
 
 
 # =========================================================
-# HERO BUTTONS
+# HERO BUTTONS (Explore My Projects removed per request)
 # =========================================================
 
-button1, button2, empty = st.columns([1.4, 1.4, 4])
-
-with button1:
-    st.link_button(
-        "Explore My Projects ↓",
-        "#featured-projects",
-        use_container_width=True
-    )
+button2, empty = st.columns([1.4, 4])
 
 with button2:
     st.link_button(
@@ -534,19 +512,12 @@ with project1:
 
     st.write("")
 
-    demo1, github1 = st.columns(2)
+    demo1, _ = st.columns(2)
 
     with demo1:
         st.link_button(
             "🚀 Live Demo",
             CYBER_DEMO,
-            use_container_width=True
-        )
-
-    with github1:
-        st.link_button(
-            "💻 GitHub",
-            CYBER_GITHUB,
             use_container_width=True
         )
 
@@ -712,8 +683,6 @@ st.html("""
     </div>
 
     <div class="education-info">
-        <strong>GPA:</strong> 4.90 / 5.00
-        &nbsp;&nbsp; • &nbsp;&nbsp;
         <strong>Expected Graduation:</strong> 2027
     </div>
 
@@ -806,6 +775,6 @@ st.link_button(
 
 st.html("""
 <div class="footer">
-    Built with Python & Streamlit · Nora · 2026
+    Built with Python & Streamlit · Norah · 2026
 </div>
 """)
