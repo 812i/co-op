@@ -1,3 +1,4 @@
+import os
 import streamlit as st
 
 # =========================================================
@@ -16,11 +17,16 @@ st.set_page_config(
 # =========================================================
 
 CYBER_DEMO = "https://cyberpynora-f2yqphkxw9ijsmyrgyzybp.streamlit.app/"
-# CYBER_GITHUB removed per request
-
 AWS_DEMO = "https://2jmaw5pf6jf43vqyyuc5rw.streamlit.app/"
+FULL_CV_STREAMLIT = "https://noura-lil-cv.streamlit.app/" # رابط ستريملت الـ CV الموجود في الأسفل
 
-FULL_CV = "https://noura-lil-cv.streamlit.app/"
+# قراءة ملف الـ PDF الموجود في المشروع محلياً أو على GitHub (للبداية)
+cv_file_path = "norahcv.pdf"
+PDF_BYTES = None
+
+if os.path.exists(cv_file_path):
+    with open(cv_file_path, "rb") as pdf_file:
+        PDF_BYTES = pdf_file.read()
 
 
 # =========================================================
@@ -47,30 +53,16 @@ html {
     padding: 25px 35px 70px 35px;
 }
 
-/* Hide Streamlit branding */
-
-#MainMenu {
-    visibility: hidden;
-}
-
-footer {
-    visibility: hidden;
-}
+#MainMenu { visibility: hidden; }
+footer { visibility: hidden; }
 
 /* NAV */
 
 .nav {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     padding: 15px 0 45px 0;
-}
-
-.logo {
-    font-size: 24px;
-    font-weight: 800;
-    color: #ffffff;
-    letter-spacing: -1px;
 }
 
 .status {
@@ -87,10 +79,8 @@ footer {
 /* HERO */
 
 .hero {
-    padding: 80px 0 80px 0;
+    padding: 80px 0 30px 0;
 }
-
-/* hero-label removed per request */
 
 .hero-title {
     font-size: clamp(50px, 8vw, 88px);
@@ -153,11 +143,7 @@ footer {
 /* PROJECT */
 
 .project {
-    background: linear-gradient(
-        145deg,
-        #171922,
-        #0d0e13
-    );
+    background: linear-gradient(145deg, #171922, #0d0e13);
     border: 1px solid #292c36;
     border-radius: 22px;
     padding: 30px;
@@ -235,11 +221,7 @@ footer {
 /* EDUCATION */
 
 .education {
-    background: linear-gradient(
-        135deg,
-        #171922,
-        #0d0e13
-    );
+    background: linear-gradient(135deg, #171922, #0d0e13);
     border: 1px solid #292c36;
     border-radius: 22px;
     padding: 30px;
@@ -267,14 +249,7 @@ footer {
 /* LOOKING FOR */
 
 .looking {
-    background:
-        radial-gradient(
-            circle at top right,
-            rgba(150, 110, 255, .13),
-            transparent 45%
-        ),
-        #101119;
-
+    background: radial-gradient(circle at top right, rgba(150, 110, 255, .13), transparent 45%), #101119;
     border: 1px solid rgba(150, 110, 255, .35);
     border-radius: 24px;
     padding: 40px;
@@ -309,7 +284,7 @@ footer {
 
 .cv {
     text-align: center;
-    padding: 110px 0 40px 0;
+    padding: 110px 0 30px 0;
 }
 
 .cv-title {
@@ -322,11 +297,11 @@ footer {
 .cv-text {
     color: #999ca7;
     max-width: 600px;
-    margin: 16px auto 30px auto;
+    margin: 16px auto 25px auto;
     line-height: 1.8;
 }
 
-/* STREAMLIT BUTTONS */
+/* BUTTONS */
 
 div.stButton > button,
 div[data-testid="stLinkButton"] a {
@@ -354,43 +329,11 @@ div[data-testid="stLinkButton"] a:hover {
     font-size: 12px;
 }
 
-/* MOBILE */
-
 @media (max-width: 700px) {
-
-    .block-container {
-        padding-left: 20px;
-        padding-right: 20px;
-    }
-
-    .hero {
-        padding-top: 50px;
-    }
-
-    .hero-title {
-        font-size: 55px;
-        letter-spacing: -3px;
-    }
-
-    .hero-text {
-        font-size: 17px;
-    }
-
-    .section-title {
-        font-size: 32px;
-    }
-
-    .project {
-        margin-bottom: 18px;
-    }
-
-    .looking {
-        padding: 28px;
-    }
-
-    .cv-title {
-        font-size: 32px;
-    }
+    .block-container { padding: 20px; }
+    .hero-title { font-size: 55px; letter-spacing: -3px; }
+    .section-title { font-size: 32px; }
+    .cv-title { font-size: 32px; }
 }
 
 </style>
@@ -403,7 +346,6 @@ div[data-testid="stLinkButton"] a:hover {
 
 st.html("""
 <div class="nav">
-    <div class="logo">NORAH.</div>
     <div class="status">OPEN TO CO-OP</div>
 </div>
 """)
@@ -417,13 +359,13 @@ st.html("""
 <div class="hero">
 
     <div class="hero-title">
-        Hi, I'm <span>Norah.</span>
+        Hi, I'm <span>Noura.</span>
     </div>
 
     <div class="hero-text">
-        I'm an Artificial Intelligence student currently looking
-        for a cooperative training opportunity where I can learn,
-        build, and contribute to real-world technology projects.
+        AI student passionate about Machine Learning, Deep Learning, and Intelligent Systems. Experienced
+        in building interactive applications using Python and Streamlit. Interested in AI engineering, research,
+        and developing practical AI solutions.
     </div>
 
     <div class="hero-date">
@@ -435,17 +377,22 @@ st.html("""
 
 
 # =========================================================
-# HERO BUTTONS (Explore My Projects removed per request)
+# HERO BUTTON (ملف الـ PDF للتحميل في البداية)
 # =========================================================
 
-button2, empty = st.columns([1.4, 4])
+col_btn1, _ = st.columns([1.5, 3])
 
-with button2:
-    st.link_button(
-        "View Full CV →",
-        FULL_CV,
-        use_container_width=True
-    )
+with col_btn1:
+    if PDF_BYTES:
+        st.download_button(
+            label="📄 Download Full CV (PDF)",
+            data=PDF_BYTES,
+            file_name="Noura_Mubark_CV.pdf",
+            mime="application/pdf",
+            use_container_width=True
+        )
+    else:
+        st.warning("الرجاء رفع ملف norahcv.pdf في مجلد المشروع.")
 
 
 # =========================================================
@@ -472,97 +419,53 @@ st.html("""
 </div>
 """)
 
-
 project1, project2 = st.columns(2, gap="large")
 
-
-# =========================================================
-# PROJECT 1
-# =========================================================
-
 with project1:
-
     st.html("""
     <div class="project">
-
-        <div class="project-number">
-            PROJECT 01
-        </div>
-
-        <div class="project-title">
-            🕵🏻 AI Cyber Detective
-        </div>
-
+        <div class="project-number">PROJECT 01</div>
+        <div class="project-title">🕵🏻 AI Cyber Detective</div>
         <div class="project-text">
             An interactive cybersecurity awareness experience
             featuring realistic security scenarios and challenges.
             Users analyze situations and learn to identify
             potentially unsafe behavior and common security risks.
         </div>
-
         <div class="tech">
             <span>Python</span>
             <span>Streamlit</span>
             <span>Cybersecurity</span>
             <span>Interactive Learning</span>
         </div>
-
     </div>
     """)
-
     st.write("")
-
     demo1, _ = st.columns(2)
-
     with demo1:
-        st.link_button(
-            "🚀 Live Demo",
-            CYBER_DEMO,
-            use_container_width=True
-        )
-
-
-# =========================================================
-# PROJECT 2
-# =========================================================
+        st.link_button("🚀 Live Demo", CYBER_DEMO, use_container_width=True)
 
 with project2:
-
     st.html("""
     <div class="project">
-
-        <div class="project-number">
-            PROJECT 02
-        </div>
-
-        <div class="project-title">
-            ☁️ AWS AI Services Platform
-        </div>
-
+        <div class="project-number">PROJECT 02</div>
+        <div class="project-title">☁️ AWS AI Services Platform</div>
         <div class="project-text">
             An interactive platform exploring practical applications
             of AWS AI services. The project demonstrates how cloud
             based AI tools can be integrated into useful applications,
             including text and sentiment analysis.
         </div>
-
         <div class="tech">
             <span>Python</span>
             <span>Streamlit</span>
             <span>AWS</span>
             <span>Amazon Comprehend</span>
         </div>
-
     </div>
     """)
-
     st.write("")
-
-    st.link_button(
-        "🚀 Live Demo",
-        AWS_DEMO,
-        use_container_width=True
-    )
+    st.link_button("🚀 Live Demo", AWS_DEMO, use_container_width=True)
 
 
 # =========================================================
@@ -571,83 +474,38 @@ with project2:
 
 st.html("""
 <div class="section">
-
-    <div class="section-number">
-        02 — SKILLS
-    </div>
-
-    <div class="section-title">
-        What I Work With
-    </div>
-
+    <div class="section-number">02 — SKILLS</div>
+    <div class="section-title">What I Work With</div>
     <div class="section-text">
         Technologies and areas I've been learning and applying
         through coursework and practical projects.
     </div>
-
 </div>
 """)
 
-
 skill1, skill2, skill3 = st.columns(3, gap="medium")
 
-
 with skill1:
-
     st.html("""
     <div class="skill">
-
-        <div class="skill-title">
-            Programming
-        </div>
-
-        <div class="skill-items">
-            Python<br>
-            SQL<br>
-            C++<br>
-            PHP
-        </div>
-
+        <div class="skill-title">Programming</div>
+        <div class="skill-items">Python<br>SQL<br>C++</div>
     </div>
     """)
-
 
 with skill2:
-
     st.html("""
     <div class="skill">
-
-        <div class="skill-title">
-            Artificial Intelligence
-        </div>
-
-        <div class="skill-items">
-            Artificial Intelligence<br>
-            Machine Learning<br>
-            Deep Learning<br>
-            AI Applications
-        </div>
-
+        <div class="skill-title">Artificial Intelligence</div>
+        <div class="skill-items">Machine Learning<br>Deep Learning<br>Computer Vision<br>Reinforcement Learning</div>
     </div>
     """)
 
-
 with skill3:
-
     st.html("""
     <div class="skill">
-
-        <div class="skill-title">
-            Tools & Technology
-        </div>
-
-        <div class="skill-items">
-            Streamlit<br>
-            AWS<br>
-            GitHub<br>
-            Microsoft 365
-        </div>
-
+        <div class="skill-title">Tools & Technology</div>
+        <div class="skill-items">Streamlit<br>GitHub<br>VS Code<br>Jupyter Notebook</div>
     </div>
     """)
 
@@ -658,34 +516,16 @@ with skill3:
 
 st.html("""
 <div class="section">
-
-    <div class="section-number">
-        03 — EDUCATION
-    </div>
-
-    <div class="section-title">
-        My Education
-    </div>
-
+    <div class="section-number">03 — EDUCATION</div>
+    <div class="section-title">My Education</div>
 </div>
 """)
 
-
 st.html("""
 <div class="education">
-
-    <div class="education-title">
-        Diploma in Artificial Intelligence
-    </div>
-
-    <div class="education-school">
-        Academy of Learning
-    </div>
-
-    <div class="education-info">
-        <strong>Expected Graduation:</strong> 2027
-    </div>
-
+    <div class="education-title">Diploma in Artificial Intelligence</div>
+    <div class="education-school">Academy Of Learning</div>
+    <div class="education-info"><strong>Expected Graduation:</strong> 2027</div>
 </div>
 """)
 
@@ -696,77 +536,54 @@ st.html("""
 
 st.html("""
 <div class="section">
-
-    <div class="section-number">
-        04 — WHAT I'M LOOKING FOR
-    </div>
-
-    <div class="section-title">
-        Let's Build Something Together
-    </div>
-
+    <div class="section-number">04 — WHAT I'M LOOKING FOR</div>
+    <div class="section-title">Let's Build Something Together</div>
 </div>
 """)
 
-
 st.html("""
 <div class="looking">
-
-    <div class="looking-title">
-        🎯 Cooperative Training Opportunity
-    </div>
-
+    <div class="looking-title">🎯 Cooperative Training Opportunity</div>
     <div class="looking-text">
-
         I'm currently looking for a cooperative training opportunity
         where I can apply my Artificial Intelligence knowledge, work
         on real-world projects, learn from an experienced team,
         and contribute to a professional environment.
-
         <br><br>
-
-        <strong style="color:#ffffff;">
-            Available starting November 2026
-        </strong>
-
+        <strong style="color:#ffffff;">Available starting November 2026</strong>
         <br><br>
-
         <span class="tag">Artificial Intelligence</span>
         <span class="tag">Machine Learning</span>
         <span class="tag">Data</span>
         <span class="tag">Cloud</span>
         <span class="tag">Technology</span>
-
     </div>
-
 </div>
 """)
 
 
 # =========================================================
-# FULL CV
+# FULL CV (موقع الستريملت في الأسفل)
 # =========================================================
 
 st.html("""
 <div class="cv">
-
-    <div class="cv-title">
-        Want to know more about me?
-    </div>
-
+    <div class="cv-title">Want to know more about me?</div>
     <div class="cv-text">
-        Explore my full CV and portfolio to learn more about
+        Explore my full interactive CV and portfolio to learn more about
         my background, skills, education, and projects.
     </div>
-
 </div>
 """)
 
+col_cv_bottom, _ = st.columns([1.5, 3])
 
-st.link_button(
-    "📄 View Full CV",
-    FULL_CV
-)
+with col_cv_bottom:
+    st.link_button(
+        "📄 View Interactive CV App",
+        FULL_CV_STREAMLIT,
+        use_container_width=True
+    )
 
 
 # =========================================================
@@ -775,6 +592,6 @@ st.link_button(
 
 st.html("""
 <div class="footer">
-    Built with Python & Streamlit · Norah · 2026
+    Built with Python & Streamlit · Noura Mubarak · 2026
 </div>
 """)
